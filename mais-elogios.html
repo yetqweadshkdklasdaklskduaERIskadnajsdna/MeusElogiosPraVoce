@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dê mais uma espiada... cada detalhe seu em tons de azul infinito.">
+    <title>Dê mais uma espiada... 👀💙</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        /* ═══════════════════════════════════════════════════
+           Tons de Azul — Exclusivamente Paleta Azul
+           ═══════════════════════════════════════════════════ */
+        :root {
+            --blue-deepest: #020b1a;
+            --blue-abyss: #041226;
+            --blue-midnight: #071c3c;
+            --blue-ocean: #0b2d60;
+            --blue-royal: #13468d;
+            --blue-cobalt: #1e5db5;
+            --blue-vibrant: #2563eb;
+            --blue-sky: #38bdf8;
+            --blue-glow: #60a5fa;
+            --blue-ice: #93c5fd;
+            --blue-frost: #bae6fd;
+            --blue-lightest: #f0f8ff;
+        }
+
+        body {
+            background-color: var(--blue-deepest);
+            color: var(--blue-lightest);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.12s linear;
+        }
+
+        /* ── Blue Ambient Background Overlay ── */
+        .blue-aurora {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(circle at 20% 15%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 80% 35%, rgba(37, 99, 235, 0.14) 0%, transparent 50%),
+                radial-gradient(circle at 40% 75%, rgba(30, 93, 181, 0.16) 0%, transparent 55%),
+                radial-gradient(circle at 85% 90%, rgba(56, 189, 248, 0.10) 0%, transparent 40%);
+        }
+
+        /* ── Twinkling Blue Particles ── */
+        .particles-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Progress Bar ── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #38bdf8, #60a5fa, #2563eb, #1e40af);
+            z-index: 200;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+        }
+
+        /* ── Navigation Buttons ── */
+        .nav-actions {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            z-index: 100;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .blue-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(7, 28, 60, 0.55);
+            border: 1px solid rgba(147, 197, 253, 0.25);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            color: var(--blue-frost);
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.35s ease;
+            box-shadow: 0 4px 18px rgba(2, 11, 26, 0.4);
+        }
+
+        .blue-nav-btn:hover {
+            background: rgba(19, 70, 141, 0.65);
+            border-color: rgba(147, 197, 253, 0.7);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.45);
+        }
+
+        .blue-nav-btn svg {
+            width: 15px;
+            height: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .blue-nav-btn:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* ── Header ── */
+        .elogios-header {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 110px 24px 50px;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.2s forwards;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            background: rgba(11, 45, 96, 0.45);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--blue-frost);
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .header-eyes {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
+            animation: eyePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes eyePulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            15% { transform: scale(1.2) rotate(-8deg); }
+            30% { transform: scale(1.2) rotate(8deg); }
+            45% { transform: scale(1.1) rotate(0deg); }
+        }
+
+        .elogios-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.8rem, 7vw, 4.8rem);
+            background: linear-gradient(135deg, #ffffff 10%, #bae6fd 45%, #60a5fa 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 14px rgba(37, 99, 235, 0.4));
+        }
+
+        .elogios-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            font-style: italic;
+            font-weight: 400;
+            color: #93c5fd;
+            max-width: 540px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .elogios-line {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+            margin: 30px auto 0;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        /* ── Elogios Container ── */
+        .elogios-container {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 24px 100px;
+        }
+
+        /* ── Elogio Card ── */
+        .elogio-card {
+            position: relative;
+            margin-bottom: 24px;
+            padding: 28px 32px 28px 86px;
+            border-radius: 20px;
+            background: rgba(11, 45, 96, 0.28);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(147, 197, 253, 0.18);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 8px 32px rgba(2, 11, 26, 0.35);
+        }
+
+        .elogio-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .elogio-card:hover {
+            transform: translateY(-4px) scale(1.012);
+            background: rgba(19, 70, 141, 0.38);
+            border-color: rgba(96, 165, 250, 0.55);
+            box-shadow: 0 16px 45px rgba(37, 99, 235, 0.28), 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .elogio-card:nth-child(odd) {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+
+        .elogio-card:nth-child(even) {
+            margin-left: 20px;
+            margin-right: 0;
+        }
+
+        .elogio-number {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: rgba(147, 197, 253, 0.38);
+            line-height: 1;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .elogio-card:hover .elogio-number {
+            color: #60a5fa;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .elogio-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.08rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: #f0f8ff;
+            font-style: italic;
+        }
+
+        /* ── Milestone Cards (Every 10th: 10, 20, etc.) ── */
+        .elogio-card.milestone {
+            padding: 34px 34px 34px 92px;
+            background: linear-gradient(135deg, rgba(19, 70, 141, 0.42), rgba(11, 45, 96, 0.55));
+            border: 1.5px solid rgba(96, 165, 250, 0.45);
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.3), inset 0 0 15px rgba(56, 189, 248, 0.12);
+        }
+
+        .elogio-card.milestone .elogio-number {
+            font-size: 1.8rem;
+            color: #93c5fd;
+            text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+        }
+
+        .elogio-card.milestone .elogio-text {
+            font-size: 1.15rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        /* ── Special Card Final (Grand Finale) ── */
+        .elogio-card.finale {
+            padding: 46px 36px;
+            text-align: center;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.45), rgba(7, 28, 60, 0.75));
+            border: 2px solid rgba(147, 197, 253, 0.75);
+            box-shadow: 0 18px 60px rgba(37, 99, 235, 0.55), 0 0 35px rgba(56, 189, 248, 0.45);
+        }
+
+        .finale-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .finale-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #bae6fd;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
+        }
+
+        .elogio-card.finale .elogio-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.4rem, 6vw, 3.8rem);
+            color: #ffffff;
+            font-weight: 500;
+            line-height: 1.3;
+            text-shadow: 0 2px 14px rgba(2, 11, 26, 0.7), 0 0 25px rgba(56, 189, 248, 0.6);
+            font-style: normal;
+        }
+
+        /* ── Blue Sparkles ── */
+        .sparkle-blue {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #60a5fa;
+            box-shadow: 0 0 10px #38bdf8;
+            pointer-events: none;
+        }
+
+        .elogio-card.milestone .sparkle-blue:nth-child(1) {
+            top: 10px;
+            right: 14px;
+            animation: twinkleBlue 2.4s ease infinite;
+        }
+
+        .elogio-card.milestone .sparkle-blue:nth-child(2) {
+            bottom: 12px;
+            right: 32px;
+            animation: twinkleBlue 2.8s ease 0.6s infinite;
+        }
+
+        @keyframes twinkleBlue {
+            0%, 100% { opacity: 0.2; transform: scale(0.6); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* ── Depth Indicator ── */
+        .depth-indicator {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .depth-indicator.visible {
+            opacity: 1;
+        }
+
+        .depth-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            color: rgba(147, 197, 253, 0.55);
+        }
+
+        .depth-dots {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .depth-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(147, 197, 253, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .depth-dot.active {
+            background: #38bdf8;
+            box-shadow: 0 0 8px #38bdf8;
+            transform: scale(1.3);
+        }
+
+        /* ── Counter ── */
+        .elogio-counter {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 100;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 9px 20px;
+            border-radius: 50px;
+            background: rgba(7, 28, 60, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(147, 197, 253, 0.3);
+            color: #bae6fd;
+            box-shadow: 0 4px 20px rgba(2, 11, 26, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        /* ── Final Message Section ── */
+        .final-message {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 24px 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .final-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-heart-blue {
+            font-size: 3.2rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            animation: heartbeat 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.6));
+        }
+
+        .final-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            color: #bae6fd;
+            text-shadow: 0 2px 14px rgba(37, 99, 235, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .final-sub {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: #93c5fd;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* ── Final Action Links ── */
+        .final-links {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .final-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .final-btn-primary {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            border: 1px solid rgba(147, 197, 253, 0.5);
+            color: #ffffff;
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.4);
+        }
+
+        .final-btn-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            background: linear-gradient(135deg, #2563eb, #38bdf8);
+            box-shadow: 0 10px 35px rgba(56, 189, 248, 0.5);
+            color: #ffffff;
+        }
+
+        .final-btn-secondary {
+            background: rgba(7, 28, 60, 0.6);
+            border: 1px solid rgba(147, 197, 253, 0.3);
+            color: #bae6fd;
+            backdrop-filter: blur(10px);
+        }
+
+        .final-btn-secondary:hover {
+            transform: translateY(-3px);
+            background: rgba(19, 70, 141, 0.5);
+            border-color: rgba(147, 197, 253, 0.6);
+            color: #ffffff;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 650px) {
+            .nav-actions {
+                top: 16px;
+                left: 16px;
+            }
+
+            .blue-nav-btn {
+                padding: 8px 16px;
+                font-size: 0.75rem;
+            }
+
+            .elogios-header {
+                padding: 95px 18px 40px;
+            }
+
+            .elogio-card {
+                padding: 22px 20px 22px 66px;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                border-radius: 16px;
+            }
+
+            .elogio-card.milestone {
+                padding: 26px 20px 26px 68px;
+            }
+
+            .elogio-card.finale {
+                padding: 34px 20px;
+            }
+
+            .elogio-number {
+                left: 18px;
+                font-size: 1.25rem;
+            }
+
+            .elogio-card.milestone .elogio-number {
+                font-size: 1.45rem;
+            }
+
+            .elogio-text {
+                font-size: 0.98rem;
+            }
+
+            .depth-indicator {
+                display: none;
+            }
+
+            .elogio-counter {
+                right: 16px;
+                bottom: 16px;
+                font-size: 0.78rem;
+                padding: 7px 16px;
+            }
+
+            .final-links {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0 10px;
+            }
+
+            .final-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas for subtle floating blue stars -->
+    <canvas class="particles-canvas" id="particlesCanvas"></canvas>
+
+    <!-- Blue Ambient Aurora Overlay -->
+    <div class="blue-aurora"></div>
+
+    <!-- Progress Bar (Tons de Azul) -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Top Navigation -->
+    <nav class="nav-actions">
+        <a href="elogios.html" class="blue-nav-btn" title="Voltar aos elogios">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Voltar
+        </a>
+        <a href="index.html" class="blue-nav-btn" title="Ir para a página inicial">
+            Início
+        </a>
+    </nav>
+
+    <!-- Depth Indicator -->
+    <div class="depth-indicator" id="depthIndicator">
+        <span class="depth-label">azul infinito</span>
+        <div class="depth-dots" id="depthDots"></div>
+    </div>
+
+    <!-- Live Counter -->
+    <div class="elogio-counter" id="elogioCounter">0 / 53</div>
+
+    <!-- Header Section -->
+    <header class="elogios-header">
+        <div class="header-badge">
+            <span>✨ Mais Uma Espiada</span>
+        </div>
+        <span class="header-eyes">👀</span>
+        <h1 class="elogios-title" id="elogiosTitle">Dê mais uma espiada...</h1>
+        <p class="elogios-subtitle" id="elogiosSubtitle">
+            Mais alguns detalhes seus que eu não poderia deixar de admirar...
+        </p>
+        <div class="elogios-line"></div>
+    </header>
+
+    <!-- Main Compliments Container -->
+    <main class="elogios-container" id="elogiosContainer">
+
+        <!-- Elogio 01 -->
+        <div class="elogio-card" data-index="1">
+            <span class="elogio-number">01</span>
+            <p class="elogio-text">vc é bela</p>
+        </div>
+
+        <!-- Elogio 02 -->
+        <div class="elogio-card" data-index="2">
+            <span class="elogio-number">02</span>
+            <p class="elogio-text">sua personalidade é incrivel</p>
+        </div>
+
+        <!-- Elogio 03 -->
+        <div class="elogio-card" data-index="3">
+            <span class="elogio-number">03</span>
+            <p class="elogio-text">vc é doce demais</p>
+        </div>
+
+        <!-- Elogio 04 -->
+        <div class="elogio-card" data-index="4">
+            <span class="elogio-number">04</span>
+            <p class="elogio-text">seu jeito é unico</p>
+        </div>
+
+        <!-- Elogio 05 -->
+        <div class="elogio-card" data-index="5">
+            <span class="elogio-number">05</span>
+            <p class="elogio-text">vc é engraçada pra caramba</p>
+        </div>
+
+        <!-- Elogio 06 -->
+        <div class="elogio-card" data-index="6">
+            <span class="elogio-number">06</span>
+            <p class="elogio-text">seu coração é enorme</p>
+        </div>
+
+        <!-- Elogio 07 -->
+        <div class="elogio-card" data-index="7">
+            <span class="elogio-number">07</span>
+            <p class="elogio-text">vc é forte</p>
+        </div>
+
+        <!-- Elogio 08 -->
+        <div class="elogio-card" data-index="8">
+            <span class="elogio-number">08</span>
+            <p class="elogio-text">seu abraço é o melhor lugar do mundo</p>
+        </div>
+
+        <!-- Elogio 09 -->
+        <div class="elogio-card" data-index="9">
+            <span class="elogio-number">09</span>
+            <p class="elogio-text">vc é carismatica</p>
+        </div>
+
+        <!-- Elogio 10 (Milestone) -->
+        <div class="elogio-card milestone" data-index="10">
+            <span class="sparkle-blue"></span>
+            <span class="sparkle-blue"></span>
+            <span class="elogio-number">10</span>
+            <p class="elogio-text">sua risada é contagiante</p>
+        </div>
+
+        <!-- Elogio 11 -->
+        <div class="elogio-card" data-index="11">
+            <span class="elogio-number">11</span>
+            <p class="elogio-text">vc é generosa</p>
+        </div>
+
+        <!-- Elogio 12 -->
+        <div class="elogio-card" data-index="12">
+            <span class="elogio-number">12</span>
+            <p class="elogio-text">seu jeito de falar é gostoso de ouvir</p>
+        </div>
+
+        <!-- Elogio 13 -->
+        <div class="elogio-card" data-index="13">
+            <span class="elogio-number">13</span>
+            <p class="elogio-text">vc é corajosa</p>
+        </div>
+
+        <!-- Elogio 14 -->
+        <div class="elogio-card" data-index="14">
+            <span class="elogio-number">14</span>
+            <p class="elogio-text">sua paciencia comigo é admiravel</p>
+        </div>
+
+        <!-- Elogio 15 -->
+        <div class="elogio-card" data-index="15">
+            <span class="elogio-number">15</span>
+            <p class="elogio-text">vc é leal</p>
+        </div>
+
+        <!-- Elogio 16 -->
+        <div class="elogio-card" data-index="16">
+            <span class="elogio-number">16</span>
+            <p class="elogio-text">seu andar tem um charme proprio</p>
+        </div>
+
+        <!-- Elogio 17 -->
+        <div class="elogio-card" data-index="17">
+            <span class="elogio-number">17</span>
+            <p class="elogio-text">vc é confiavel</p>
+        </div>
+
+        <!-- Elogio 18 -->
+        <div class="elogio-card" data-index="18">
+            <span class="elogio-number">18</span>
+            <p class="elogio-text">sua criatividade nao tem limite</p>
+        </div>
+
+        <!-- Elogio 19 -->
+        <div class="elogio-card" data-index="19">
+            <span class="elogio-number">19</span>
+            <p class="elogio-text">vc é atenciosa</p>
+        </div>
+
+        <!-- Elogio 20 (Milestone) -->
+        <div class="elogio-card milestone" data-index="20">
+            <span class="sparkle-blue"></span>
+            <span class="sparkle-blue"></span>
+            <span class="elogio-number">20</span>
+            <p class="elogio-text">vc é elegante</p>
+        </div>
+
+        <!-- Elogio 21 -->
+        <div class="elogio-card" data-index="21">
+            <span class="elogio-number">21</span>
+            <p class="elogio-text">sua ambição me inspira</p>
+        </div>
+
+        <!-- Elogio 22 -->
+        <div class="elogio-card" data-index="22">
+            <span class="elogio-number">22</span>
+            <p class="elogio-text">vc é gentil</p>
+        </div>
+
+        <!-- Elogio 23 -->
+        <div class="elogio-card" data-index="23">
+            <span class="elogio-number">23</span>
+            <p class="elogio-text">vc é sincera</p>
+        </div>
+
+        <!-- Elogio 24 -->
+        <div class="elogio-card" data-index="24">
+            <span class="elogio-number">24</span>
+            <p class="elogio-text">seu jeito de sorrir é o meu favorito</p>
+        </div>
+
+        <!-- Elogio 25 -->
+        <div class="elogio-card" data-index="25">
+            <span class="elogio-number">25</span>
+            <p class="elogio-text">vc é acolhedora</p>
+        </div>
+
+        <!-- Elogio 26 -->
+        <div class="elogio-card" data-index="26">
+            <span class="elogio-number">26</span>
+            <p class="elogio-text">sua companhia é o melhor lugar pra estar</p>
+        </div>
+
+        <!-- Elogio 27 -->
+        <div class="elogio-card" data-index="27">
+            <span class="elogio-number">27</span>
+            <p class="elogio-text">vc é atenta</p>
+        </div>
+
+        <!-- Elogio 28 -->
+        <div class="elogio-card" data-index="28">
+            <span class="elogio-number">28</span>
+            <p class="elogio-text">seu jeito de cuidar de quem ama é lindo</p>
+        </div>
+
+        <!-- Elogio 29 -->
+        <div class="elogio-card" data-index="29">
+            <span class="elogio-number">29</span>
+            <p class="elogio-text">vc é espontanea</p>
+        </div>
+
+        <!-- Elogio 30 (Milestone) -->
+        <div class="elogio-card milestone" data-index="30">
+            <span class="sparkle-blue"></span>
+            <span class="sparkle-blue"></span>
+            <span class="elogio-number">30</span>
+            <p class="elogio-text">sua voz me deixa calmo</p>
+        </div>
+
+        <!-- Elogio 31 -->
+        <div class="elogio-card" data-index="31">
+            <span class="elogio-number">31</span>
+            <p class="elogio-text">vc é curiosa</p>
+        </div>
+
+        <!-- Elogio 32 -->
+        <div class="elogio-card" data-index="32">
+            <span class="elogio-number">32</span>
+            <p class="elogio-text">seu jeito de rir alto é contagiante</p>
+        </div>
+
+        <!-- Elogio 33 -->
+        <div class="elogio-card" data-index="33">
+            <span class="elogio-number">33</span>
+            <p class="elogio-text">vc é humilde</p>
+        </div>
+
+        <!-- Elogio 34 -->
+        <div class="elogio-card" data-index="34">
+            <span class="elogio-number">34</span>
+            <p class="elogio-text">sua presença já basta</p>
+        </div>
+
+        <!-- Elogio 35 -->
+        <div class="elogio-card" data-index="35">
+            <span class="elogio-number">35</span>
+            <p class="elogio-text">vc é sensivel</p>
+        </div>
+
+        <!-- Elogio 36 -->
+        <div class="elogio-card" data-index="36">
+            <span class="elogio-number">36</span>
+            <p class="elogio-text">seu olhar diz tudo</p>
+        </div>
+
+        <!-- Elogio 37 -->
+        <div class="elogio-card" data-index="37">
+            <span class="elogio-number">37</span>
+            <p class="elogio-text">vc é organizada</p>
+        </div>
+
+        <!-- Elogio 38 -->
+        <div class="elogio-card" data-index="38">
+            <span class="elogio-number">38</span>
+            <p class="elogio-text">sua determinação é admiravel</p>
+        </div>
+
+        <!-- Elogio 39 -->
+        <div class="elogio-card" data-index="39">
+            <span class="elogio-number">39</span>
+            <p class="elogio-text">vc é divertida</p>
+        </div>
+
+        <!-- Elogio 40 (Milestone) -->
+        <div class="elogio-card milestone" data-index="40">
+            <span class="sparkle-blue"></span>
+            <span class="sparkle-blue"></span>
+            <span class="elogio-number">40</span>
+            <p class="elogio-text">seu jeito de ser é raro de achar</p>
+        </div>
+
+        <!-- Elogio 41 -->
+        <div class="elogio-card" data-index="41">
+            <span class="elogio-number">41</span>
+            <p class="elogio-text">vc é empatica</p>
+        </div>
+
+        <!-- Elogio 42 -->
+        <div class="elogio-card" data-index="42">
+            <span class="elogio-number">42</span>
+            <p class="elogio-text">suas escolhas mostram quem vc é</p>
+        </div>
+
+        <!-- Elogio 43 -->
+        <div class="elogio-card" data-index="43">
+            <span class="elogio-number">43</span>
+            <p class="elogio-text">vc é autentica</p>
+        </div>
+
+        <!-- Elogio 44 -->
+        <div class="elogio-card" data-index="44">
+            <span class="elogio-number">44</span>
+            <p class="elogio-text">seu jeito de brincar é fofo</p>
+        </div>
+
+        <!-- Elogio 45 -->
+        <div class="elogio-card" data-index="45">
+            <span class="elogio-number">45</span>
+            <p class="elogio-text">vc é responsavel</p>
+        </div>
+
+        <!-- Elogio 46 -->
+        <div class="elogio-card" data-index="46">
+            <span class="elogio-number">46</span>
+            <p class="elogio-text">sua opinião sempre agrega</p>
+        </div>
+
+        <!-- Elogio 47 -->
+        <div class="elogio-card" data-index="47">
+            <span class="elogio-number">47</span>
+            <p class="elogio-text">vc é meiga</p>
+        </div>
+
+        <!-- Elogio 48 -->
+        <div class="elogio-card" data-index="48">
+            <span class="elogio-number">48</span>
+            <p class="elogio-text">seu carinho é sincero</p>
+        </div>
+
+        <!-- Elogio 49 -->
+        <div class="elogio-card" data-index="49">
+            <span class="elogio-number">49</span>
+            <p class="elogio-text">vc é paciente</p>
+        </div>
+
+        <!-- Elogio 50 (Milestone) -->
+        <div class="elogio-card milestone" data-index="50">
+            <span class="sparkle-blue"></span>
+            <span class="sparkle-blue"></span>
+            <span class="elogio-number">50</span>
+            <p class="elogio-text">sua energia contagia</p>
+        </div>
+
+        <!-- Elogio 51 -->
+        <div class="elogio-card" data-index="51">
+            <span class="elogio-number">51</span>
+            <p class="elogio-text">vc é uma boa ouvinte</p>
+        </div>
+
+        <!-- Elogio 52 -->
+        <div class="elogio-card" data-index="52">
+            <span class="elogio-number">52</span>
+            <p class="elogio-text">sua lealdade nao tem preço</p>
+        </div>
+
+        <!-- Elogio 53 (Grand Finale) -->
+        <div class="elogio-card finale" data-index="53">
+            <div class="finale-top">
+                <span class="sparkle-blue" style="position:static; display:inline-block;"></span>
+                <span class="finale-number">💙</span>
+                <span class="sparkle-blue" style="position:static; display:inline-block;"></span>
+            </div>
+            <p class="elogio-text">eu realmente te amo</p>
+        </div>
+
+    </main>
+
+    <!-- Final Message Section -->
+    <section class="final-message" id="finalMessage">
+        <span class="final-heart-blue">💙</span>
+        <h2 class="final-text">Mais Que Qualquer Palavra</h2>
+        <p class="final-sub">
+            Nem mesmo depois de todos os elogios não é suficiente... porque você merece infinitos.
+        </p>
+
+        <div class="final-links">
+            <a href="elogios.html" class="final-btn final-btn-secondary">
+                ← Voltar aos 100 Elogios
+            </a>
+            <a href="MeuSentimentoHEHE.html" class="final-btn final-btn-primary">
+                Ver Meus Sentimentos 💜
+            </a>
+            <a href="index.html" class="final-btn final-btn-secondary">
+                Voltar ao Início ✨
+            </a>
+        </div>
+    </section>
+
+    <script>
+        /* ═══════════════════════════════════════════════════
+           Sistema de Transição de Tons de Azul
+           ═══════════════════════════════════════════════════ */
+        const blueStops = [
+            { pos: 0.00, r: 2,   g: 11,  b: 26  },  // #020b1a — Azul Meia-Noite Profundo
+            { pos: 0.15, r: 4,   g: 18,  b: 38  },  // #041226 — Azul Abissal
+            { pos: 0.30, r: 7,   g: 28,  b: 60  },  // #071c3c — Azul Noturno
+            { pos: 0.45, r: 11,  g: 45,  b: 96  },  // #0b2d60 — Azul Oceano
+            { pos: 0.60, r: 19,  g: 70,  b: 141 },  // #13468d — Azul Real
+            { pos: 0.75, r: 14,  g: 55,  b: 115 },  // #0e3773 — Azul Safira
+            { pos: 0.88, r: 8,   g: 32,  b: 72  },  // #082048 — Azul Índigo
+            { pos: 1.00, r: 2,   g: 11,  b: 26  }   // #020b1a — Retorno ao Infinito
+        ];
+
+        function interpolateBlueColor(progress) {
+            progress = Math.max(0, Math.min(1, progress));
+            let lower = blueStops[0];
+            let upper = blueStops[blueStops.length - 1];
+
+            for (let i = 0; i < blueStops.length - 1; i++) {
+                if (progress >= blueStops[i].pos && progress <= blueStops[i + 1].pos) {
+                    lower = blueStops[i];
+                    upper = blueStops[i + 1];
+                    break;
+                }
+            }
+
+            const range = upper.pos - lower.pos;
+            const localProgress = range === 0 ? 0 : (progress - lower.pos) / range;
+            const t = localProgress * localProgress * (3 - 2 * localProgress);
+
+            const r = Math.round(lower.r + (upper.r - lower.r) * t);
+            const g = Math.round(lower.g + (upper.g - lower.g) * t);
+            const b = Math.round(lower.b + (upper.b - lower.b) * t);
+
+            return { r, g, b };
+        }
+
+        /* ── Canvas de Partículas Azuis ── */
+        const canvas = document.getElementById('particlesCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.6;
+                this.speedY = -(Math.random() * 0.4 + 0.15);
+                this.speedX = (Math.random() - 0.5) * 0.25;
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.hue = 200 + Math.random() * 30;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 90%, 75%, ${this.opacity})`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = `hsla(${this.hue}, 100%, 65%, 0.8)`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        /* ── Configuração dos Pontos de Profundidade ── */
+        const depthDots = document.getElementById('depthDots');
+        for (let i = 0; i < 10; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('depth-dot');
+            depthDots.appendChild(dot);
+        }
+        const allDepthDots = depthDots.querySelectorAll('.depth-dot');
+
+        /* ── Scroll Handler & Revelação dos Elogios ── */
+        const cards = document.querySelectorAll('.elogio-card');
+        const totalCards = cards.length;
+        const progressBar = document.getElementById('progressBar');
+        const depthIndicator = document.getElementById('depthIndicator');
+        const elogioCounter = document.getElementById('elogioCounter');
+        const finalMessage = document.getElementById('finalMessage');
+
+        let ticking = false;
+
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+
+            requestAnimationFrame(() => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+
+                // Transição do fundo estritamente em tons de azul
+                const color = interpolateBlueColor(progress);
+                document.body.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+
+                // Barra de progresso
+                progressBar.style.width = (progress * 100) + '%';
+
+                // Indicador de profundidade lateral
+                if (progress > 0.04) {
+                    depthIndicator.classList.add('visible');
+                } else {
+                    depthIndicator.classList.remove('visible');
+                }
+
+                const activeCount = Math.floor(progress * 10);
+                allDepthDots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i <= activeCount);
+                });
+
+                // Revelar cards conforme rolam na tela
+                let visibleCount = 0;
+                cards.forEach((card) => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.90) {
+                        card.classList.add('visible');
+                        visibleCount++;
+                    }
+                });
+
+                // Atualizar contador
+                elogioCounter.textContent = `${visibleCount} / ${totalCards}`;
+
+                // Mensagem final
+                const finalRect = finalMessage.getBoundingClientRect();
+                if (finalRect.top < window.innerHeight * 0.82) {
+                    finalMessage.classList.add('visible');
+                }
+
+                ticking = false;
+            });
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('load', () => {
+            onScroll();
+        });
+    </script>
+</body>
+</html>

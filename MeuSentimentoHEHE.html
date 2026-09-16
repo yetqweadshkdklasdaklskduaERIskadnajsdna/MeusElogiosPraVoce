@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meus sentimentos em vídeo, feitos com todo o carinho do coração.">
+    <title>Meus Sentimentos 💜</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        body {
+            background: #0d0b14;
+            color: #e8e0f0;
+            min-height: 100vh;
+        }
+
+        /* ── Background Ambiance ── */
+        .ambiance {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(120, 80, 160, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(80, 60, 140, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(100, 70, 150, 0.04) 0%, transparent 70%);
+        }
+
+        /* ── Main Container ── */
+        .sentimentos-page {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 24px 80px;
+        }
+
+        /* ── Header ── */
+        .sentimentos-header {
+            text-align: center;
+            margin-bottom: 60px;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.3s forwards;
+        }
+
+        .sentimentos-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            display: block;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .sentimentos-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: #d4b8e8;
+            margin-bottom: 12px;
+        }
+
+        .sentimentos-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-style: italic;
+            font-weight: 400;
+            color: rgba(200, 180, 220, 0.6);
+            max-width: 450px;
+            letter-spacing: 0.3px;
+        }
+
+        .sentimentos-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(180, 140, 220, 0.4), transparent);
+            margin: 24px auto 0;
+        }
+
+        /* ── Video Section ── */
+        .videos-container {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            width: 100%;
+            max-width: 850px;
+        }
+
+        .video-wrapper {
+            opacity: 0;
+            position: relative;
+        }
+
+        .video-wrapper:nth-child(1) {
+            animation: fadeInUp 1.2s ease 0.6s forwards;
+        }
+
+        .video-wrapper:nth-child(2) {
+            animation: fadeInUp 1.2s ease 0.9s forwards;
+        }
+
+        .video-wrapper:nth-child(3) {
+            animation: fadeInUp 1.2s ease 1.2s forwards;
+        }
+
+        .video-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-left: 4px;
+        }
+
+        .video-label-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(180, 140, 220, 0.5);
+        }
+
+        .video-label-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(180, 140, 220, 0.2), transparent);
+        }
+
+        .video-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(180, 140, 220, 0.12);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .video-card:hover {
+            border-color: rgba(180, 140, 220, 0.25);
+            box-shadow: 0 20px 60px rgba(100, 60, 160, 0.15),
+                        0 0 80px rgba(120, 80, 180, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .video-card video,
+        .video-card iframe {
+            width: 100%;
+            min-height: 300px;
+            aspect-ratio: 16 / 9;
+            display: block;
+            border-radius: 19px;
+            background: #1a1525;
+            border: none;
+        }
+
+        .video-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(13, 11, 20, 0.1) 0%, transparent 20%, transparent 80%, rgba(13, 11, 20, 0.15) 100%);
+            pointer-events: none;
+        }
+
+        /* ── Glow Effect ── */
+        .video-glow {
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(180, 140, 220, 0.1), transparent, rgba(120, 80, 180, 0.08));
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .video-wrapper:hover .video-glow {
+            opacity: 1;
+        }
+
+        /* ── Bottom Message ── */
+        .sentimentos-footer {
+            text-align: center;
+            margin-top: 70px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease 1.3s forwards;
+        }
+
+        .sentimentos-footer-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            color: rgba(180, 140, 220, 0.5);
+        }
+
+        /* ── Back Button Override ── */
+        .back-btn {
+            border-color: rgba(180, 140, 220, 0.2);
+            color: rgba(200, 180, 220, 0.7);
+        }
+
+        .back-btn:hover {
+            background: rgba(180, 140, 220, 0.12);
+            color: #d4b8e8;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .sentimentos-page {
+                padding: 50px 16px 60px;
+            }
+
+            .video-card {
+                border-radius: 14px;
+            }
+
+            .video-card video {
+                border-radius: 13px;
+            }
+
+            .videos-container {
+                gap: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Ambiance -->
+    <div class="ambiance"></div>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Voltar
+    </a>
+
+    <!-- Main Content -->
+    <main class="sentimentos-page">
+        <!-- Header -->
+        <header class="sentimentos-header">
+            <span class="sentimentos-icon">💜</span>
+            <h1 class="sentimentos-title">Meus Sentimentos</h1>
+            <p class="sentimentos-subtitle">Algumas coisas são melhor sentidas do que ditas...</p>
+            <div class="sentimentos-line"></div>
+        </header>
+
+        <!-- Videos -->
+        <div class="videos-container">
+            <!-- Video 1 -->
+            <div class="video-wrapper">
+                <div class="video-label">
+                    <span class="video-label-number">Parte I</span>
+                    <span class="video-label-line"></span>
+                </div>
+                <div class="video-glow"></div>
+                <div class="video-card">
+                    <iframe 
+                        src="https://www.youtube.com/embed/RVijA9dRoTo?rel=0" 
+                        title="Meus Sentimentos - Parte 1" 
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-wrapper">
+                <div class="video-label">
+                    <span class="video-label-number">Parte II</span>
+                    <span class="video-label-line"></span>
+                </div>
+                <div class="video-glow"></div>
+                <div class="video-card">
+                    <iframe 
+                        src="https://www.youtube.com/embed/Ya7F_vPyi1M?rel=0" 
+                        title="Meus Sentimentos - Parte 2" 
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+            <!-- Video 3 -->
+            <div class="video-wrapper">
+                <div class="video-label">
+                    <span class="video-label-number">Parte III</span>
+                    <span class="video-label-line"></span>
+                </div>
+                <div class="video-glow"></div>
+                <div class="video-card">
+                    <iframe 
+                        src="https://www.youtube.com/embed/Zl8ORm1jWtM?rel=0" 
+                        title="Meus Sentimentos - Parte 3" 
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+        <!-- Footer -->
+        <footer class="sentimentos-footer">
+            <p class="sentimentos-footer-text">com todo meu coração 💜</p>
+        </footer>
+    </main>
+</body>
+</html>

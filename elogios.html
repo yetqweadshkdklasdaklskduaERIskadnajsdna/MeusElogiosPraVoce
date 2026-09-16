@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="100 elogios escritos com carinho, cada um mais especial que o outro.">
+    <title>100 Elogios Pra Você ✨</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        body {
+            background: #fff8e1;
+            min-height: 100vh;
+            transition: background-color 0.1s linear;
+        }
+
+        /* ── Header ── */
+        .elogios-header {
+            position: relative;
+            text-align: center;
+            padding: 100px 24px 60px;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.3s forwards;
+        }
+
+        .elogios-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 16px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .elogios-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: #5a4a3a;
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .elogios-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-style: italic;
+            font-weight: 400;
+            color: #8a7a6a;
+            max-width: 450px;
+            margin: 0 auto;
+            transition: color 0.3s ease;
+        }
+
+        .elogios-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c4a882, transparent);
+            margin: 28px auto 0;
+            transition: background 0.3s ease;
+        }
+
+        /* ── Elogios Container ── */
+        .elogios-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px 24px 120px;
+        }
+
+        /* ── Individual Elogio Card ── */
+        .elogio-card {
+            position: relative;
+            margin-bottom: 24px;
+            padding: 28px 32px 28px 80px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .elogio-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .elogio-card:hover {
+            transform: translateY(-3px) scale(1.01);
+            background: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .elogio-card:nth-child(odd) {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+
+        .elogio-card:nth-child(even) {
+            margin-left: 20px;
+            margin-right: 0;
+        }
+
+        .elogio-number {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.25);
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .elogio-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1.65;
+            color: #3a3028;
+            font-style: italic;
+            transition: color 0.3s ease;
+        }
+
+        /* ── Milestone Cards (Every 10th) ── */
+        .elogio-card.milestone {
+            padding: 36px 32px 36px 80px;
+            background: rgba(255, 255, 255, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .elogio-card.milestone .elogio-number {
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .elogio-card.milestone .elogio-text {
+            font-size: 1.15rem;
+        }
+
+        /* ── Sparkle Decorations ── */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+        }
+
+        .elogio-card.milestone .sparkle:nth-child(1) {
+            top: 8px;
+            right: 12px;
+            animation: twinkle 2.5s ease infinite;
+        }
+
+        .elogio-card.milestone .sparkle:nth-child(2) {
+            bottom: 10px;
+            right: 30px;
+            animation: twinkle 3s ease 0.5s infinite;
+        }
+
+        /* ── Progress Bar ── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd54f, #64b5f6, #1565c0);
+            z-index: 200;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(100, 181, 246, 0.4);
+        }
+
+        /* ── Depth Indicator ── */
+        .depth-indicator {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .depth-indicator.visible {
+            opacity: 1;
+        }
+
+        .depth-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            color: rgba(255, 255, 255, 0.3);
+            transition: color 0.3s ease;
+        }
+
+        .depth-dots {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .depth-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .depth-dot.active {
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+        }
+
+        /* ── Final Message ── */
+        .final-message {
+            text-align: center;
+            padding: 80px 24px 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .final-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-heart {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 20px;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        .final-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .final-sub {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 12px;
+        }
+
+        /* ── Botão +100 Elogios (Olhinhos) ── */
+        .more-elogios-wrapper {
+            margin-top: 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .more-elogios-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 36px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.35), rgba(13, 71, 161, 0.65));
+            border: 1.5px solid rgba(144, 202, 249, 0.6);
+            color: #ffffff;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(33, 150, 243, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .more-elogios-btn:hover {
+            transform: translateY(-4px) scale(1.04);
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.6), rgba(13, 71, 161, 0.85));
+            border-color: rgba(187, 222, 251, 0.9);
+            box-shadow: 0 14px 45px rgba(33, 150, 243, 0.55), 0 0 25px rgba(100, 181, 246, 0.4);
+            color: #ffffff;
+        }
+
+        .eye-emoji {
+            font-size: 1.9rem;
+            display: inline-block;
+            animation: eyePulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes eyePulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            20% { transform: scale(1.25) rotate(-10deg); }
+            40% { transform: scale(1.25) rotate(10deg); }
+            60% { transform: scale(1.15) rotate(0deg); }
+        }
+
+        .more-elogios-btn .btn-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.12rem;
+            letter-spacing: 0.3px;
+        }
+
+        .more-elogios-btn .btn-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .more-elogios-btn:hover .btn-arrow {
+            transform: translateX(6px);
+        }
+
+        .more-hint {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.88rem;
+            font-style: italic;
+            color: rgba(187, 222, 251, 0.75);
+            letter-spacing: 0.3px;
+        }
+
+        /* ── Back Button ── */
+        .back-btn {
+            border-color: rgba(90, 74, 58, 0.2);
+            color: rgba(90, 74, 58, 0.6);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            color: #5a4a3a;
+        }
+
+        /* ── Counter ── */
+        .elogio-counter {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 100;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 18px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(90, 74, 58, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .elogio-card {
+                padding: 22px 20px 22px 62px;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                border-radius: 14px;
+            }
+
+            .elogio-number {
+                left: 18px;
+                font-size: 1.3rem;
+            }
+
+            .elogio-text {
+                font-size: 0.95rem;
+            }
+
+            .depth-indicator {
+                display: none;
+            }
+
+            .elogio-counter {
+                right: 16px;
+                bottom: 16px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn" id="backBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Voltar
+    </a>
+
+    <!-- Depth Indicator -->
+    <div class="depth-indicator" id="depthIndicator">
+        <span class="depth-label">profundidade</span>
+        <div class="depth-dots" id="depthDots"></div>
+    </div>
+
+    <!-- Counter -->
+    <div class="elogio-counter" id="elogioCounter">0 / 100</div>
+
+    <!-- Header -->
+    <header class="elogios-header">
+        <span class="elogios-icon">✨</span>
+        <h1 class="elogios-title" id="elogiosTitle">100 Elogios Pra Você</h1>
+        <p class="elogios-subtitle" id="elogiosSubtitle">Cada um escrito de coração, porque você merece ouvir todos eles</p>
+        <div class="elogios-line" id="elogiosLine"></div>
+    </header>
+
+    <!-- Elogios -->
+    <main class="elogios-container" id="elogiosContainer">
+
+        <!-- Elogio 1 -->
+        <div class="elogio-card" data-index="1">
+            <span class="elogio-number">01</span>
+            <p class="elogio-text">seu sorriso é tao belo que pra mim ele é a maior obra de arte que esse mundo pode proporcionar</p>
+        </div>
+
+        <!-- Elogio 2 -->
+        <div class="elogio-card" data-index="2">
+            <span class="elogio-number">02</span>
+            <p class="elogio-text">seu sorriso consegue ser tao radiante mas tao radiante que um simples sorriso seu consegue reluzir mais que ouro</p>
+        </div>
+
+        <!-- Elogio 3 -->
+        <div class="elogio-card" data-index="3">
+            <span class="elogio-number">03</span>
+            <p class="elogio-text">um sorriso seu consegue deixar um doido que nem eu tao animado e tao feliz que esse doido cria ate uma pagina de 100 elogios pra voce</p>
+        </div>
+
+        <!-- Elogio 4 -->
+        <div class="elogio-card" data-index="4">
+            <span class="elogio-number">04</span>
+            <p class="elogio-text">a maior estrela que eu vejo é o brilho radiante de seu sorriso</p>
+        </div>
+
+        <!-- Elogio 5 -->
+        <div class="elogio-card" data-index="5">
+            <span class="elogio-number">05</span>
+            <p class="elogio-text">como pode um sorriso da mulher mais linda do mundo conseguir fazer um simples rapaz mover montanhas para ver outra vez esse sorriso</p>
+        </div>
+
+        <!-- Elogio 6 -->
+        <div class="elogio-card" data-index="6">
+            <span class="elogio-number">06</span>
+            <p class="elogio-text">eu amo seu sorriso, demais, amo tanto que eu escreveria uma biblioteca cheia de livros so com elogios relacionados ao seu sorriso</p>
+        </div>
+
+        <!-- Elogio 7 -->
+        <div class="elogio-card" data-index="7">
+            <span class="elogio-number">07</span>
+            <p class="elogio-text">nem tudo que reluz é ouro, a grande parte é seu sorriso que vale mais que qualquer coisa nesse mundo</p>
+        </div>
+
+        <!-- Elogio 8 -->
+        <div class="elogio-card" data-index="8">
+            <span class="elogio-number">08</span>
+            <p class="elogio-text">o seu jeito é tao incrivel, tao incrivel que ate vc estressada consegue me deixar todo feliz</p>
+        </div>
+
+        <!-- Elogio 9 -->
+        <div class="elogio-card" data-index="9">
+            <span class="elogio-number">09</span>
+            <p class="elogio-text">vc é tao estilosa que sinceramente, pra mim vc é miss universo, nao existe alguem mais bela que vc</p>
+        </div>
+
+        <!-- Elogio 10 -->
+        <div class="elogio-card milestone" data-index="10">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">10</span>
+            <p class="elogio-text">seu ombro é tao bom que eu me escoraria nele toda hr nessa estrada que é a vida</p>
+        </div>
+
+        <!-- Elogio 11 -->
+        <div class="elogio-card" data-index="11">
+            <span class="elogio-number">11</span>
+            <p class="elogio-text">seus cabelos sao tao cedosos e macios que ele é o maior calmante natural que eu poderia ver</p>
+        </div>
+
+        <!-- Elogio 12 -->
+        <div class="elogio-card" data-index="12">
+            <span class="elogio-number">12</span>
+            <p class="elogio-text">vc é tao especial que voce me faz melhorar como pessoa</p>
+        </div>
+
+        <!-- Elogio 13 -->
+        <div class="elogio-card" data-index="13">
+            <span class="elogio-number">13</span>
+            <p class="elogio-text">seu olhar é muito vidrante, uma porta entre o fisico e os sentimentos, seu olhar consegue deixar marcas no mundo so com seu olhar</p>
+        </div>
+
+        <!-- Elogio 14 -->
+        <div class="elogio-card" data-index="14">
+            <span class="elogio-number">14</span>
+            <p class="elogio-text">como pode apenas um par de olhos ser tao belo e tao profundo que nem mesmo livros e mais livros cheio de palavras consegue representar um simples olhar seu</p>
+        </div>
+
+        <!-- Elogio 15 -->
+        <div class="elogio-card" data-index="15">
+            <span class="elogio-number">15</span>
+            <p class="elogio-text">adoro seu jeito de ser</p>
+        </div>
+
+        <!-- Elogio 16 -->
+        <div class="elogio-card" data-index="16">
+            <span class="elogio-number">16</span>
+            <p class="elogio-text">seu jeito sincerona é tao bom, vc toda sincera para mim é a maior beleza que voce tem</p>
+        </div>
+
+        <!-- Elogio 17 -->
+        <div class="elogio-card" data-index="17">
+            <span class="elogio-number">17</span>
+            <p class="elogio-text">seja sempre voce e sempre seja sincera, voce é incrivel</p>
+        </div>
+
+        <!-- Elogio 18 -->
+        <div class="elogio-card" data-index="18">
+            <span class="elogio-number">18</span>
+            <p class="elogio-text">seu estilo bruta porem docil é a maior combinação que eu poderia ver</p>
+        </div>
+
+        <!-- Elogio 19 -->
+        <div class="elogio-card" data-index="19">
+            <span class="elogio-number">19</span>
+            <p class="elogio-text">suas unhas sao tao bem feitas que sao consideradas obra de arte!</p>
+        </div>
+
+        <!-- Elogio 20 -->
+        <div class="elogio-card milestone" data-index="20">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">20</span>
+            <p class="elogio-text">se vc fosse uma musica eu diria que vc é sweet child o mine, pois vc é a unica pessoa que consegue trazer as melhores coisas da vida numa so pessoa </p>
+        </div>
+
+        <!-- Elogio 21 -->
+        <div class="elogio-card" data-index="21">
+            <span class="elogio-number">21</span>
+            <p class="elogio-text">assim como filosofos observa a natureza para encontrar sentido nas coisas, eu observo voce pra tentar entender de onde vem tanta beleza</p>
+        </div>
+
+        <!-- Elogio 22 -->
+        <div class="elogio-card" data-index="22">
+            <span class="elogio-number">22</span>
+            <p class="elogio-text">Nao falo muito mas, voce é meu porto seguro, a pessoa com quem eu posso contar</p>
+        </div>
+
+        <!-- Elogio 23 -->
+        <div class="elogio-card" data-index="23">
+            <span class="elogio-number">23</span>
+            <p class="elogio-text">tao radiante que nem mesmo os melhores dos cristais brilha tanto quanto voce</p>
+        </div>
+
+        <!-- Elogio 24 -->
+        <div class="elogio-card" data-index="24">
+            <span class="elogio-number">24</span>
+            <p class="elogio-text">maravilhosamente incrivel</p>
+        </div>
+
+        <!-- Elogio 25 -->
+        <div class="elogio-card" data-index="25">
+            <span class="elogio-number">25</span>
+            <p class="elogio-text">Viajar com vc é a melhor coisa que me ocorre quando eu viajo</p>
+        </div>
+
+        <!-- Elogio 26 -->
+        <div class="elogio-card" data-index="26">
+            <span class="elogio-number">26</span>
+            <p class="elogio-text">nem mesmo a melhor orquestra consegue replicar a sua doce voz</p>
+        </div>
+
+        <!-- Elogio 27 -->
+        <div class="elogio-card" data-index="27">
+            <span class="elogio-number">27</span>
+            <p class="elogio-text">AHHHHHHHH Voce é incrivel demaissss ce ta doiiiidoooooooooo</p>
+        </div>
+
+        <!-- Elogio 28 -->
+        <div class="elogio-card" data-index="28">
+            <span class="elogio-number">28</span>
+            <p class="elogio-text">Eu quero te elogiar por 100 vidass</p>
+        </div>
+
+        <!-- Elogio 29 -->
+        <div class="elogio-card" data-index="29">
+            <span class="elogio-number">29</span>
+            <p class="elogio-text">Voce é a maior princesa que ja pisou nesse mundo e que vai pisar</p>
+        </div>
+
+        <!-- Elogio 30 -->
+        <div class="elogio-card milestone" data-index="30">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">30</span>
+            <p class="elogio-text">amo seu jeito de falar, me traz conforto</p>
+        </div>
+
+        <!-- Elogio 31 -->
+        <div class="elogio-card" data-index="31">
+            <span class="elogio-number">31</span>
+            <p class="elogio-text">eu poderia reviver todo o mesmo dia ao seu lado que seria sempre incrivel</p>
+        </div>
+
+        <!-- Elogio 32 -->
+        <div class="elogio-card" data-index="32">
+            <span class="elogio-number">32</span>
+            <p class="elogio-text">nunca perde a graça de tentar te fazer rir, nunca perde a graça de ver seu sorriso e nunca vai perder a graça de me apaixonar por vc</p>
+        </div>
+
+        <!-- Elogio 33 -->
+        <div class="elogio-card" data-index="33">
+            <span class="elogio-number">33</span>
+            <p class="elogio-text">voce é tao incrivel que eu faço questao de te elogiar todo dia e mesmo assim eu nao me canso</p>
+        </div>
+
+        <!-- Elogio 34 -->
+        <div class="elogio-card" data-index="34">
+            <span class="elogio-number">34</span>
+            <p class="elogio-text">pode demorar o tempo que for mas eu nunca vou parar de gostar de voce, afinal voce é unica nesse mundo</p>
+        </div>
+
+        <!-- Elogio 35 -->
+        <div class="elogio-card" data-index="35">
+            <span class="elogio-number">35</span>
+            <p class="elogio-text">nem mesmo ganhar na loteria me deixaria mais feliz que te ver sorrindo pelas piadas que eu faço</p>
+        </div>
+
+        <!-- Elogio 36 -->
+        <div class="elogio-card" data-index="36">
+            <span class="elogio-number">36</span>
+            <p class="elogio-text">seu estilo é tao perfeito</p>
+        </div>
+
+        <!-- Elogio 37 -->
+        <div class="elogio-card" data-index="37">
+            <span class="elogio-number">37</span>
+            <p class="elogio-text">voce é tao linda que ate voce simples(como vc fala) nao deixa de ser linda, eu te acho linda de qualquer jeito </p>
+        </div>
+
+        <!-- Elogio 38 -->
+        <div class="elogio-card" data-index="38">
+            <span class="elogio-number">38</span>
+            <p class="elogio-text">cada dia com voce é mais um maravilhoso dia</p>
+        </div>
+
+        <!-- Elogio 39 -->
+        <div class="elogio-card" data-index="39">
+            <span class="elogio-number">39</span>
+            <p class="elogio-text">se eu pudesse fazer algum pedido sobre voce, eu iria pedir mais 5 minutos com vc antes de dormir para eu continuar conversando com voce</p>
+        </div>
+
+        <!-- Elogio 40 -->
+        <div class="elogio-card milestone" data-index="40">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">40</span>
+            <p class="elogio-text">eheheheh nem chegou na metade e eu ainda quero mais 1000 elogios diferentes pra voce</p>
+        </div>
+
+        <!-- Elogio 41 -->
+        <div class="elogio-card" data-index="41">
+            <span class="elogio-number">41</span>
+            <p class="elogio-text">quero muito ser tao incrivel pra voce quanto voce é para mim</p>
+        </div>
+
+        <!-- Elogio 42 -->
+        <div class="elogio-card" data-index="42">
+            <span class="elogio-number">42</span>
+            <p class="elogio-text">Voce é capaz de fazer o impossivel</p>
+        </div>
+
+        <!-- Elogio 43 -->
+        <div class="elogio-card" data-index="43">
+            <span class="elogio-number">43</span>
+            <p class="elogio-text">continua sendo voce, Afinal Voce é incrivel</p>
+        </div>
+
+        <!-- Elogio 44 -->
+        <div class="elogio-card" data-index="44">
+            <span class="elogio-number">44</span>
+            <p class="elogio-text">seus elogios sao como uma coberta para mim num dia frio</p>
+        </div>
+
+        <!-- Elogio 45 -->
+        <div class="elogio-card" data-index="45">
+            <span class="elogio-number">45</span>
+            <p class="elogio-text">Ser cavaleiro com voce é muito bom, nao é sobre necessidade, é sobre te deixar mais confortavel e isso nao tem preço</p>
+        </div>
+
+        <!-- Elogio 46 -->
+        <div class="elogio-card" data-index="46">
+            <span class="elogio-number">46</span>
+            <p class="elogio-text">Não existe nenhum dia triste quando voce surgiu na minha vida</p>
+        </div>
+
+        <!-- Elogio 47 -->
+        <div class="elogio-card" data-index="47">
+            <span class="elogio-number">47</span>
+            <p class="elogio-text">Meu melhor dia é sempre o proximo ao seu lado</p>
+        </div>
+
+        <!-- Elogio 48 -->
+        <div class="elogio-card" data-index="48">
+            <span class="elogio-number">48</span>
+            <p class="elogio-text">a noite estrelada nem é tao bela depois de ver seu sorriso</p>
+        </div>
+
+        <!-- Elogio 49 -->
+        <div class="elogio-card" data-index="49">
+            <span class="elogio-number">49</span>
+            <p class="elogio-text">voce é perfeitamente bela, forte, dedicada, voce é tudo</p>
+        </div>
+
+        <!-- Elogio 50 -->
+        <div class="elogio-card milestone" data-index="50">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">50</span>
+            <p class="elogio-text">chegou na metade dos elogios e eu tenho que te falar que voce é alem de inefavel, serio, eu posso mandar mais 1 milhao de elogios que nenhum vai demonstrar quem voce é de verdade, quem vc é para mim, comparado a voce, tudo isso sao meras palavras a pessoa que voce é</p>
+        </div>
+
+        <!-- Elogio 51 -->
+        <div class="elogio-card" data-index="51">
+            <span class="elogio-number">51</span>
+            <p class="elogio-text">Voce me cativa de um jeito incrive</p>
+        </div>
+
+        <!-- Elogio 52 -->
+        <div class="elogio-card" data-index="52">
+            <span class="elogio-number">52</span>
+            <p class="elogio-text">Tão talentosa mas tão talentosa que ate os maiores atletas nao tem o talento que voce tem</p>
+        </div>
+
+        <!-- Elogio 53 -->
+        <div class="elogio-card" data-index="53">
+            <span class="elogio-number">53</span>
+            <p class="elogio-text">Voce é incrivelmente esbelta, maravilhosamente bela</p>
+        </div>
+
+        <!-- Elogio 54 -->
+        <div class="elogio-card" data-index="54">
+            <span class="elogio-number">54</span>
+            <p class="elogio-text">exuberante demais ao ponto de enriquecer qualquer ambiente</p>
+        </div>
+
+        <!-- Elogio 55 -->
+        <div class="elogio-card" data-index="55">
+            <span class="elogio-number">55</span>
+            <p class="elogio-text">Voce é tao unica que eu dividiria meu dia inteiro com voce</p>
+        </div>
+
+        <!-- Elogio 56 -->
+        <div class="elogio-card" data-index="56">
+            <span class="elogio-number">56</span>
+            <p class="elogio-text">tao cuidadosa que sempre esta cuidando de si</p>
+        </div>
+
+        <!-- Elogio 57 -->
+        <div class="elogio-card" data-index="57">
+            <span class="elogio-number">57</span>
+            <p class="elogio-text">Tão doce que sempre esta observando cada movimento e analisando os pequenos detalhes para ajudar da melhor forma possivel, mal sabe voce que so de voce esta por perto ja resolve 99,999% dos problemas</p>
+        </div>
+
+        <!-- Elogio 58 -->
+        <div class="elogio-card" data-index="58">
+            <span class="elogio-number">58</span>
+            <p class="elogio-text">ahhh se eu mudasse uma coisa em voce(seria nd oxiii kaksak) ta achando mesmo que voce tem que mudar alguma coisa??? jamaisss, sua lindaa</p>
+        </div>
+
+        <!-- Elogio 59 -->
+        <div class="elogio-card" data-index="59">
+            <span class="elogio-number">59</span>
+            <p class="elogio-text">o pior dia da minha vida foi os dias que eu nao te conhecia</p>
+        </div>
+
+        <!-- Elogio 60 -->
+        <div class="elogio-card milestone" data-index="60">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">60</span>
+            <p class="elogio-text">qualquer roupa fica incrivel em voce</p>
+        </div>
+
+        <!-- Elogio 61 -->
+        <div class="elogio-card" data-index="61">
+            <span class="elogio-number">61</span>
+            <p class="elogio-text">voce é tao radiante que iluminaria o mundo inteiro com seu sorriso</p>
+        </div>
+
+        <!-- Elogio 62 -->
+        <div class="elogio-card" data-index="62">
+            <span class="elogio-number">62</span>
+            <p class="elogio-text">Um elogio seu é tudo para mim</p>
+        </div>
+
+        <!-- Elogio 63 -->
+        <div class="elogio-card" data-index="63">
+            <span class="elogio-number">63</span>
+            <p class="elogio-text">sua sombrancelha parece que foi esculpida por ser tao perfeita e bem desenhada</p>
+        </div>
+
+        <!-- Elogio 64 -->
+        <div class="elogio-card" data-index="64">
+            <span class="elogio-number">64</span>
+            <p class="elogio-text">Tenho energia suficiente para deixar vc feliz umas 10 vidas inteiras</p>
+        </div>
+
+        <!-- Elogio 65 -->
+        <div class="elogio-card" data-index="65">
+            <span class="elogio-number">65</span>
+            <p class="elogio-text">Glamurosa voce, indispensavelmente bela</p>
+        </div>
+
+        <!-- Elogio 66 -->
+        <div class="elogio-card" data-index="66">
+            <span class="elogio-number">66</span>
+            <p class="elogio-text">Sua postura é incrivel</p>
+        </div>
+
+        <!-- Elogio 67 -->
+        <div class="elogio-card" data-index="67">
+            <span class="elogio-number">67</span>
+            <p class="elogio-text">Voce é inteligente demaiss, uma genia, maravilhosa</p>
+        </div>
+
+        <!-- Elogio 68 -->
+        <div class="elogio-card" data-index="68">
+            <span class="elogio-number">68</span>
+            <p class="elogio-text">tudo que voce faz é incrivel, voce consegue ser incrivel em tudo</p>
+        </div>
+
+        <!-- Elogio 69 -->
+        <div class="elogio-card" data-index="69">
+            <span class="elogio-number">69</span>
+            <p class="elogio-text">Seu cabelo sempre esta lindo, ele é muito belo</p>
+        </div>
+
+        <!-- Elogio 70 -->
+        <div class="elogio-card milestone" data-index="70">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">70</span>
+            <p class="elogio-text">seu cabelo solto parace ate tecido da roupa mais cara do mundo</p>
+        </div>
+
+        <!-- Elogio 71 -->
+        <div class="elogio-card" data-index="71">
+            <span class="elogio-number">71</span>
+            <p class="elogio-text">Voce é muito dedicada!</p>
+        </div>
+
+        <!-- Elogio 72 -->
+        <div class="elogio-card" data-index="72">
+            <span class="elogio-number">72</span>
+            <p class="elogio-text">Voce é fofa demaiss eheheh</p>
+        </div>
+
+        <!-- Elogio 73 -->
+        <div class="elogio-card" data-index="73">
+            <span class="elogio-number">73</span>
+            <p class="elogio-text">viver ao seu lado é uma montanha russa de sentimentos bons aonde a cada passada no trilho, fica sempre melhor</p>
+        </div>
+
+        <!-- Elogio 74 -->
+        <div class="elogio-card" data-index="74">
+            <span class="elogio-number">74</span>
+            <p class="elogio-text">Voce é muito carinhosa</p>
+        </div>
+
+        <!-- Elogio 75 -->
+        <div class="elogio-card" data-index="75">
+            <span class="elogio-number">75</span>
+            <p class="elogio-text">Amo o seu jeito de ser, o jeitinho doidinha que sempre esta presente em vc ehehhe voce é incrivel</p>
+        </div>
+
+        <!-- Elogio 76 -->
+        <div class="elogio-card" data-index="76">
+            <span class="elogio-number">76</span>
+            <p class="elogio-text">se eu fosse mensurar sua beleza, eu diria que ela eu iria colocar numa escala de numeros, afinal, os numeros nao tem fim</p>
+        </div>
+
+        <!-- Elogio 77 -->
+        <div class="elogio-card" data-index="77">
+            <span class="elogio-number">77</span>
+            <p class="elogio-text">sorriso tao incrivel que eu fico ate sem folego tentando entender o nivel de beleza que vem dele </p>
+        </div>
+
+        <!-- Elogio 78 -->
+        <div class="elogio-card" data-index="78">
+            <span class="elogio-number">78</span>
+            <p class="elogio-text">divonica ao ponto de qualquer roupa ser bonita em voce</p>
+        </div>
+
+        <!-- Elogio 79 -->
+        <div class="elogio-card" data-index="79">
+            <span class="elogio-number">79</span>
+            <p class="elogio-text">magnifica ao ponto de presentes n se igualar a quem voce é</p>
+        </div>
+
+        <!-- Elogio 80 -->
+        <div class="elogio-card milestone" data-index="80">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">80</span>
+            <p class="elogio-text">Voce transborda beleza </p>
+        </div>
+
+        <!-- Elogio 81 -->
+        <div class="elogio-card" data-index="81">
+            <span class="elogio-number">81</span>
+            <p class="elogio-text">se sua beleza fosse uma musica, eu diria que ela seria uma sinfonia de betoween</p>
+        </div>
+
+        <!-- Elogio 82 -->
+        <div class="elogio-card" data-index="82">
+            <span class="elogio-number">82</span>
+            <p class="elogio-text">sua deticação que vc tem com tudo é admiravel</p>
+        </div>
+
+        <!-- Elogio 83 -->
+        <div class="elogio-card" data-index="83">
+            <span class="elogio-number">83</span>
+            <p class="elogio-text"> Voce merece ganhar uma medalha de tudo, afinal vc é tudo de bom</p>
+        </div>
+
+        <!-- Elogio 84 -->
+        <div class="elogio-card" data-index="84">
+            <span class="elogio-number">84</span>
+            <p class="elogio-text">se beleza fosse bibliotecas eu teria que falar que a sua beleza seria bits/stdc++.h pois ela invocaria todas as beleazas que voce tem</p>
+        </div>
+
+        <!-- Elogio 85 -->
+        <div class="elogio-card" data-index="85">
+            <span class="elogio-number">85</span>
+            <p class="elogio-text">eu veria 10000 ao infinito de video seu sobre qualquer coisa</p>
+        </div>
+
+        <!-- Elogio 86 -->
+        <div class="elogio-card" data-index="86">
+            <span class="elogio-number">86</span>
+            <p class="elogio-text">todo assunto desinteressante vira interessante quando é voce falando</p>
+        </div>
+
+        <!-- Elogio 87 -->
+        <div class="elogio-card" data-index="87">
+            <span class="elogio-number">87</span>
+            <p class="elogio-text">eu faria curso de stand up so para poder ver vc rindo ehehe</p>
+        </div>
+
+        <!-- Elogio 88 -->
+        <div class="elogio-card" data-index="88">
+            <span class="elogio-number">88</span>
+            <p class="elogio-text">seus olhos parece dois cristais que sao impossiveis de copiar</p>
+        </div>
+
+        <!-- Elogio 89 -->
+        <div class="elogio-card" data-index="89">
+            <span class="elogio-number">89</span>
+            <p class="elogio-text">se beleza fosse crime, voce seria a maior criminosa do mundo ehehhehe </p>
+        </div>
+
+        <!-- Elogio 90 -->
+        <div class="elogio-card milestone" data-index="90">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">90</span>
+            <p class="elogio-text">amo o seu jeito delicado porem braba de ser ehehe me encanta</p>
+        </div>
+
+        <!-- Elogio 91 -->
+        <div class="elogio-card" data-index="91">
+            <span class="elogio-number">91</span>
+            <p class="elogio-text">me cativas a sua personalidade</p>
+        </div>
+
+        <!-- Elogio 92 -->
+        <div class="elogio-card" data-index="92">
+            <span class="elogio-number">92</span>
+            <p class="elogio-text">Suas maos sao delicadas, porem brutas, maos de uma princesa</p>
+        </div>
+
+        <!-- Elogio 93 -->
+        <div class="elogio-card" data-index="93">
+            <span class="elogio-number">93</span>
+            <p class="elogio-text">seu abraço é a coisa mais reconfortante que existe no mundo, amo ser abraçado por voce</p>
+        </div>
+
+        <!-- Elogio 94 -->
+        <div class="elogio-card" data-index="94">
+            <span class="elogio-number">94</span>
+            <p class="elogio-text">seu gosto musical é unico, musicas belas e que realmente trasmite algo</p>
+        </div>
+
+        <!-- Elogio 95 -->
+        <div class="elogio-card" data-index="95">
+            <span class="elogio-number">95</span>
+            <p class="elogio-text">suas Ambiçoes, sonhos sao algo que em pouco tempo voce ira realizar e sair dos sonhos(espero que eu tbmmm ehehhe quero muito uma vida com vc skaksakska)</p>
+        </div>
+
+        <!-- Elogio 96 -->
+        <div class="elogio-card" data-index="96">
+            <span class="elogio-number">96</span>
+            <p class="elogio-text">Segurar sua mao é a maior experiencia que eu tenho nos dias de aula, sempre quando eu toco elas me da um conforto que é impossivel descrever ele</p>
+        </div>
+
+        <!-- Elogio 97 -->
+        <div class="elogio-card" data-index="97">
+            <span class="elogio-number">97</span>
+            <p class="elogio-text">meu presente, passado e futuro com vc é sempre sensacional, nao exite nenhuma memoria ruim que eu tenha com voce</p>
+        </div>
+
+        <!-- Elogio 98 -->
+        <div class="elogio-card" data-index="98">
+            <span class="elogio-number">98</span>
+            <p class="elogio-text">Seu jeitinho estressada eu adoro(nao sendo comigo skaskak) </p>
+        </div>
+
+        <!-- Elogio 99 -->
+        <div class="elogio-card" data-index="99">
+            <span class="elogio-number">99</span>
+            <p class="elogio-text">sua voz é angelical, linda, maravilhosa, bela, esbelta, tudo de bom, vc cantando tbm, que incrivel junto tbm sua beleza natural é encantadora, junto tbm dessa risada sua que aquece meu coração</p>
+        </div>
+
+        <!-- Elogio 100 -->
+        <div class="elogio-card milestone" data-index="100">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="elogio-number">100</span>
+            <p class="elogio-text">EU TE AMO</p>
+        </div>
+
+    </main>
+
+    <!-- Final Message -->
+    <div class="final-message" id="finalMessage">
+        <span class="final-heart">💙</span>
+        <p class="final-text">E ainda assim, cem não são suficientes...</p>
+        <p class="final-sub">porque você merece infinitos</p>
+
+        <!-- Botão dos Olhinhos -->
+        <div class="more-elogios-wrapper">
+            <a href="mais-elogios.html" class="more-elogios-btn" id="btnMaisElogios" title="Dê mais uma espiada...">
+                <span class="eye-emoji">👀</span>
+                <span class="btn-text">Dê mais uma espiada...</span>
+                <span class="btn-arrow">➜</span>
+            </a>
+            <p class="more-hint">Clica no olhinho pra espiar... 👀💙</p>
+        </div>
+    </div>
+
+    <script>
+        /* ═══════════════════════════════════════════════════
+           Color Gradient System — Céu Limpo → Oceano
+           ═══════════════════════════════════════════════════ */
+
+        // Color stops: yellow → light blue → deep ocean blue
+        const colorStops = [
+            { pos: 0.00, r: 255, g: 248, b: 225 },  // #fff8e1 — warm yellow
+            { pos: 0.03, r: 255, g: 253, b: 231 },  // pale yellow
+            { pos: 0.06, r: 227, g: 242, b: 253 },  // #e3f2fd — lightest blue (sky)
+            { pos: 0.12, r: 187, g: 222, b: 251 },  // #bbdefb — very light blue
+            { pos: 0.20, r: 144, g: 202, b: 249 },  // #90caf9 — light sky blue
+            { pos: 0.30, r: 100, g: 181, b: 246 },  // #64b5f6 — sky blue
+            { pos: 0.40, r: 66,  g: 165, b: 245 },  // #42a5f5 — bright blue
+            { pos: 0.50, r: 33,  g: 150, b: 243 },  // #2196f3 — blue
+            { pos: 0.60, r: 30,  g: 136, b: 229 },  // #1e88e5 — medium blue
+            { pos: 0.70, r: 21,  g: 101, b: 192 },  // #1565c0 — deep blue
+            { pos: 0.80, r: 13,  g: 71,  b: 161 },  // #0d47a1 — darker blue
+            { pos: 0.90, r: 8,   g: 50,  b: 120 },  // deep ocean
+            { pos: 1.00, r: 3,   g: 22,  b: 52  },  // #031634 — abyss
+        ];
+
+        function interpolateColor(progress) {
+            // Clamp progress between 0 and 1
+            progress = Math.max(0, Math.min(1, progress));
+
+            // Find the two stops to interpolate between
+            let lower = colorStops[0];
+            let upper = colorStops[colorStops.length - 1];
+
+            for (let i = 0; i < colorStops.length - 1; i++) {
+                if (progress >= colorStops[i].pos && progress <= colorStops[i + 1].pos) {
+                    lower = colorStops[i];
+                    upper = colorStops[i + 1];
+                    break;
+                }
+            }
+
+            // Calculate local progress between the two stops
+            const range = upper.pos - lower.pos;
+            const localProgress = range === 0 ? 0 : (progress - lower.pos) / range;
+
+            // Smooth easing
+            const t = localProgress * localProgress * (3 - 2 * localProgress);
+
+            const r = Math.round(lower.r + (upper.r - lower.r) * t);
+            const g = Math.round(lower.g + (upper.g - lower.g) * t);
+            const b = Math.round(lower.b + (upper.b - lower.b) * t);
+
+            return { r, g, b };
+        }
+
+        function getLuminance(r, g, b) {
+            return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        }
+
+        /* ── Depth Indicator Setup ── */
+        const depthDots = document.getElementById('depthDots');
+        for (let i = 0; i < 10; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('depth-dot');
+            depthDots.appendChild(dot);
+        }
+
+        /* ── Scroll Handler ── */
+        const cards = document.querySelectorAll('.elogio-card');
+        const progressBar = document.getElementById('progressBar');
+        const depthIndicator = document.getElementById('depthIndicator');
+        const elogioCounter = document.getElementById('elogioCounter');
+        const backBtn = document.getElementById('backBtn');
+        const title = document.getElementById('elogiosTitle');
+        const subtitle = document.getElementById('elogiosSubtitle');
+        const finalMessage = document.getElementById('finalMessage');
+        const allDepthDots = depthDots.querySelectorAll('.depth-dot');
+
+        let ticking = false;
+
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+
+            requestAnimationFrame(() => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+
+                // ── Update background color ──
+                const color = interpolateColor(progress);
+                document.body.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+
+                // ── Text color based on luminance ──
+                const lum = getLuminance(color.r, color.g, color.b);
+                const textColor = lum > 0.5 ? '#3a3028' : '#e8e4f0';
+                const subtextColor = lum > 0.5 ? 'rgba(90, 74, 58, 0.6)' : 'rgba(220, 215, 235, 0.5)';
+                const accentColor = lum > 0.5 ? 'rgba(90, 74, 58, 0.6)' : 'rgba(200, 195, 220, 0.6)';
+
+                title.style.color = textColor;
+                subtitle.style.color = subtextColor;
+
+                // ── Back button adaptation ──
+                if (lum > 0.5) {
+                    backBtn.style.color = 'rgba(90, 74, 58, 0.6)';
+                    backBtn.style.borderColor = 'rgba(90, 74, 58, 0.2)';
+                    backBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+                } else {
+                    backBtn.style.color = 'rgba(255, 255, 255, 0.7)';
+                    backBtn.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                    backBtn.style.background = 'rgba(255, 255, 255, 0.08)';
+                }
+
+                // ── Counter adaptation ──
+                elogioCounter.style.color = textColor;
+                elogioCounter.style.borderColor = lum > 0.5
+                    ? 'rgba(90, 74, 58, 0.15)'
+                    : 'rgba(255, 255, 255, 0.12)';
+                elogioCounter.style.background = lum > 0.5
+                    ? 'rgba(255, 255, 255, 0.3)'
+                    : 'rgba(255, 255, 255, 0.08)';
+
+                // ── Progress bar ──
+                progressBar.style.width = (progress * 100) + '%';
+
+                // ── Depth indicator ──
+                if (progress > 0.05) {
+                    depthIndicator.classList.add('visible');
+                } else {
+                    depthIndicator.classList.remove('visible');
+                }
+
+                const activeCount = Math.floor(progress * 10);
+                allDepthDots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i <= activeCount);
+                });
+
+                // ── Reveal cards with IntersectionObserver-like behavior ──
+                let visibleCount = 0;
+                cards.forEach((card) => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.88) {
+                        card.classList.add('visible');
+                        visibleCount++;
+                    }
+                    // Adapt card text colors
+                    const texts = card.querySelectorAll('.elogio-text');
+                    const numbers = card.querySelectorAll('.elogio-number');
+                    texts.forEach(t => t.style.color = textColor);
+                    numbers.forEach(n => n.style.color = lum > 0.5
+                        ? 'rgba(90, 74, 58, 0.15)'
+                        : 'rgba(255, 255, 255, 0.2)');
+                });
+
+                elogioCounter.textContent = `${visibleCount} / 100`;
+
+                // ── Final message ──
+                const finalRect = finalMessage.getBoundingClientRect();
+                if (finalRect.top < window.innerHeight * 0.8) {
+                    finalMessage.classList.add('visible');
+                }
+
+                ticking = false;
+            });
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Trigger initial check
+        window.addEventListener('load', () => {
+            onScroll();
+        });
+    </script>
+</body>
+</html>
